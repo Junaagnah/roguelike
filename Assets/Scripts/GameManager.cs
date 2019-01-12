@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool playersTurn = true;
 
     private Text levelText;
+    private Text gameOverText;
     private GameObject levelImage;
     private int level = 1;
     private List<Enemy> enemies;
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
 
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        gameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
         levelText.text = "Etage " + level;
         levelImage.SetActive(true);
         Invoke("HideLevelImage", levelStartDelay);
@@ -62,14 +65,30 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        levelText.text = "After " + level + " etages, you died.";
+        levelText.text = "After " + level + " levels, you died.";
+        gameOverText.text = "Press R to restart. Press Escape to quit.";
         levelImage.SetActive(true);
-        enabled = false;
+        GameObject.FindGameObjectWithTag("Player").SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            gameOverText.text = "";
+            level = 0;
+            playerFoodPoints = 100;
+            SoundManager.instance.gameOverMusic.Stop();
+            SoundManager.instance.musicSource.Play();
+            SceneManager.LoadScene(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (playersTurn || enemiesMoving || doingSetup)
             return;
 
