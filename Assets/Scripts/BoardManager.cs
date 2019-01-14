@@ -19,8 +19,8 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public int columns = 8;
-    public int rows = 8;
+    public int columns = 17;
+    public int rows = 17;
     public Count wallCount = new Count(5, 9);
     public Count foodCount = new Count(1, 5);
     public GameObject exit;
@@ -57,9 +57,9 @@ public class BoardManager : MonoBehaviour
             {
                 GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
                 
-                if (x == -1 || x == columns || y == -1 || y == rows)
+                if (x == -1 || x == columns || y == -1 || y == rows || x % 8 == 0 || y % 8 == 0 && x != 0 && y != 0)
                 {
-                    toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
+                        toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
                 }
 
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
