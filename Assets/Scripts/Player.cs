@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Player : MovingObject
 {
     public int wallDamage = 1;
+    public int monsterDamage = 5;
     public int pointsPerFood = 10;
     public int pointsPerSoda = 20;
     public float restartLevelDelay = 1;
@@ -61,7 +62,6 @@ public class Player : MovingObject
 
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
-        food--;
         foodText.text = "Food: " + food;
 
         base.AttemptMove<T>(xDir, yDir);
@@ -100,12 +100,26 @@ public class Player : MovingObject
         }
     }
 
-    protected override void OnCantMove<T>(T component)
+    protected override void BreakWall(Wall wall)
     {
-        Wall hitWall = component as Wall;
-        hitWall.DamageWall(wallDamage);
+        wall.DamageWall(wallDamage);
         animator.SetTrigger("playerChop");
     }
+
+    protected override void AttackEnnemy(Enemy enemy)
+    {
+        enemy.DamageMob(monsterDamage);
+        animator.SetTrigger("playerChop");
+    }
+
+    protected override void AttackPlayer(Player player) { }
+
+    //protected override void OnCantMove<T>(T component)
+    //{
+    //    Wall hitWall = component as Wall;
+    //    hitWall.DamageWall(wallDamage);
+    //    animator.SetTrigger("playerChop");
+    //}
 
     private void Restart()
     {

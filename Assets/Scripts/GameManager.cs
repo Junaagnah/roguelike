@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     private Text levelText;
     private Text gameOverText;
     private GameObject levelImage;
-    private int level = 1;
+    private int level = 40;
     private List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
@@ -111,8 +111,15 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].MoveEnemy();
-            yield return new WaitForSeconds(enemies[i].moveTime);
+            if (enemies[i].hpMob <= 0)
+            {
+                enemies.RemoveAt(i);
+            }
+            else
+            {
+                enemies[i].MoveEnemy();
+                yield return new WaitForSeconds(enemies[i].moveTime);
+            }
         }
 
         playersTurn = true;
