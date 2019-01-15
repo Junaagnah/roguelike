@@ -9,8 +9,6 @@ public class Enemy : MovingObject
     public int wallDamage = 2;
     public AudioClip enemyAttack1;
     public AudioClip enemyAttack2;
-    public AudioClip chopSound1;
-    public AudioClip chopSound2;
 
     private Animator animator;
     private Transform target;
@@ -59,7 +57,7 @@ public class Enemy : MovingObject
     protected override void BreakWall(Wall wall)
     {
         wall.DamageWall(wallDamage);
-        animator.SetTrigger("ennemyAttack");
+        animator.SetTrigger("enemyAttack");
         SoundManager.instance.RandomizeSfx(enemyAttack1, enemyAttack2);
     }
 
@@ -67,8 +65,8 @@ public class Enemy : MovingObject
 
     public void DamageMob(int loss)
     {
-        SoundManager.instance.RandomizeSfx(chopSound1, chopSound2);
         hpMob -= loss;
+        skipMove = false;
 
         if (hpMob <= 0)
         {

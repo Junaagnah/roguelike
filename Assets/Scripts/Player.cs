@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Player : MovingObject
 {
     public int wallDamage = 1;
-    public int monsterDamage = 5;
+    public int monsterDamage = 3;
     public int pointsPerFood = 10;
     public int pointsPerSoda = 20;
     public float restartLevelDelay = 1;
@@ -18,6 +18,10 @@ public class Player : MovingObject
     public AudioClip eatSound2;
     public AudioClip drinkSound1;
     public AudioClip drinkSound2;
+    public AudioClip getHit;
+    public AudioClip chopSound1;
+    public AudioClip chopSound2;
+    public AudioClip swooshSound;
     public AudioClip gameOverSound;
 
 
@@ -104,22 +108,18 @@ public class Player : MovingObject
     {
         wall.DamageWall(wallDamage);
         animator.SetTrigger("playerChop");
+        SoundManager.instance.RandomizeSfx(chopSound1, chopSound2);
     }
 
     protected override void AttackEnnemy(Enemy enemy)
     {
         enemy.DamageMob(monsterDamage);
         animator.SetTrigger("playerChop");
+        //SoundManager.instance.RandomizeSfx(swooshSound1, swooshSound2);
+        GetComponent<AudioSource>().PlayOneShot(swooshSound);
     }
 
     protected override void AttackPlayer(Player player) { }
-
-    //protected override void OnCantMove<T>(T component)
-    //{
-    //    Wall hitWall = component as Wall;
-    //    hitWall.DamageWall(wallDamage);
-    //    animator.SetTrigger("playerChop");
-    //}
 
     private void Restart()
     {
@@ -130,18 +130,37 @@ public class Player : MovingObject
     {
         animator.SetTrigger("playerHit");
         food -= loss;
+        GetComponent<AudioSource>().PlayOneShot(getHit);
         foodText.text = "-" + loss + " Food: " + food;
         CheckIfGameOver();
     }
+
+    //private void CheckIfGameOver()
+    //{
+    //    if (food <= 0)
+    //    {
+    //        SoundManager.instance.PlaySingle(gameOverSound);
+    //        SoundManager.instance.musicSource.Stop();
+    //        SoundManager.instance.gameOverMusic.Play();
+    //        GameManager.instance.GameOver();
+    //    }
+    //}
 
     private void CheckIfGameOver()
     {
         if (food <= 0)
         {
-            SoundManager.instance.PlaySingle(gameOverSound);
             SoundManager.instance.musicSource.Stop();
-            SoundManager.instance.gameOverMusic.Play();
-            GameManager.instance.GameOver();
+            StartCoroutine(DCD());
         }
+    }
+
+    IEnumerator DCD()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        SoundManager.instance.PlaySingle(gameOverSound);
+        yield return new WaitForSecondsRealtime(0.1f);
+        SoundManager.instance.gameOverMusic.Play();
+        GameManager.instance.GameOver();
     }
 }
