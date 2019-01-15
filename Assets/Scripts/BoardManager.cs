@@ -19,8 +19,8 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public int columns = 17;
-    public int rows = 17;
+    public int columns = 28;
+    public int rows = 28;
     public Count wallCount = new Count(5, 9);
     public Count foodCount = new Count(1, 5);
     public GameObject exit;
@@ -38,29 +38,57 @@ public class BoardManager : MonoBehaviour
     {
         gridPositions.Clear();
 
-        for (int x = 1; x < columns - 1; x++)
+        for (int x = 2; x < columns - 2; x++)
         {
-            for (int y = 1; y < rows - 1; y++)
+            for (int y = 2; y < rows - 2; y++)
             {
-                gridPositions.Add(new Vector3(x, y, 0f));
+                if (x % 10 != 0 && y % 10 != 0)
+                {
+                    gridPositions.Add(new Vector3(x, y, 0f));
+                }
             }
         }
     }
+
+    //void InitializeList()
+    //{
+    //    gridPositions.Clear();
+
+    //    for (int x = 1; x < columns - 1; x++)
+    //    {
+    //        for (int y = 1; y < rows - 1; y++)
+    //        {
+    //            gridPositions.Add(new Vector3(x, y, 0f));
+    //        }
+    //    }
+    //}
 
     void BoardSetup()
     {
         boardHolder = new GameObject("Board").transform;
 
-        for (int x = -1; x < columns + 1; x++)
+        for (int x = 0; x < columns ; x++)
         {
-            for (int y = -1; y < rows + 1; y++)
+            for (int y = 0; y < rows ; y++)
             {
                 GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
-                
-                if (x == -1 || x == columns || y == -1 || y == rows || x % 8 == 0 || y % 8 == 0 && x != 0 && y != 0)
+
+                //if ((x == -1 || x == columns || y == -1 || y == rows || x % 8 == 0 || y % 8 == 0) && (x != 0 && y != 0 && x != columns -1 && y != rows -1))
+                //if ((x % 10 == 0 || y % 10 == 0) && (x != (columns - 1)/4) && (y != (rows - 1) / 4))
+
+                if (x != 0 && y != 0 && x != columns -1 && y != rows -1)
                 {
+                    if ((x % 10 == 0 || y % 10 == 0) && ((x % 5 != 0) || (y % 5 != 0)) || (x % 10 == 0 && y % 10 == 0))
+                    {
                         toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
+                    }
                 }
+                else if (x == 0 || y == 0 || x == columns -1 || y == rows -1)
+                {
+                    toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
+                }
+
+                
 
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
@@ -100,6 +128,6 @@ public class BoardManager : MonoBehaviour
         int enemyCount = (int)Mathf.Log(level, 2f);
         LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
 
-        Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
+        Instantiate(exit, new Vector3(columns - 2, rows - 2, 0f), Quaternion.identity);
     }
 }
