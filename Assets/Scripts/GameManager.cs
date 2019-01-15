@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private Text gameOverText;
     private GameObject levelImage;
     private int level = 40;
+    private int level = 0;
     private List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
             playerFoodPoints = 100;
             SoundManager.instance.gameOverMusic.Stop();
             SoundManager.instance.musicSource.Play();
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
