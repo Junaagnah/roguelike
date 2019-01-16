@@ -16,10 +16,12 @@ public class GameManager : MonoBehaviour
     private Text levelText;
     private Text gameOverText;
     private GameObject levelImage;
-    private int level = 0;
+    private int level = 1;
     private List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
+    private bool firstRun = true;
+    private bool gameOver = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -32,13 +34,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         enemies = new List<Enemy>();
         boardScript = GetComponent<BoardManager>();
+        Debug.Log(boardScript);
         InitGame();
     }
 
     private void OnLevelWasLoaded(int index)
     {
-        level++;
+        if (firstRun)
+        {
+            firstRun = false;
+            return;
+        }
 
+        level++;
         InitGame();
     }
 
@@ -65,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        gameOver = true;
         levelText.text = "After " + level + " levels, you died.";
         gameOverText.text = "Press R to restart. Press Escape to quit.";
         levelImage.SetActive(true);
@@ -76,6 +85,13 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            if (gameOver)
+            {
+                gameOver = false;
+            } else
+            {
+                GameObject.FindGameObjectWithTag("Player").SetActive(false);
+            }
             gameOverText.text = "";
             level = 0;
             playerFoodPoints = 100;

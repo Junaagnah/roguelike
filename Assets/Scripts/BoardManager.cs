@@ -19,10 +19,10 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public int columns = 28;
-    public int rows = 28;
+    public int columns = 21;
+    public int rows = 21;
     public Count wallCount = new Count(5, 9);
-    public Count foodCount = new Count(1, 5);
+    public Count foodCount = new Count(60, 80);
     public GameObject exit;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
