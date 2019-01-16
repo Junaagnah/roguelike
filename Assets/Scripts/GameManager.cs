@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public float levelStartDelay = 2f;
-    public float turnDelay = .1f;
+    public float turnDelay = 0.1f;
     public static GameManager instance = null;
     public BoardManager boardScript;
     public int playerFoodPoints = 100;
@@ -111,8 +111,15 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].MoveEnemy();
-            yield return new WaitForSeconds(enemies[i].moveTime);
+            if (enemies[i].hpMob <= 0)
+            {
+                enemies.RemoveAt(i);
+            }
+            else
+            {
+                enemies[i].MoveEnemy();
+                yield return new WaitForSeconds(enemies[i].moveTime);
+            }
         }
 
         playersTurn = true;
