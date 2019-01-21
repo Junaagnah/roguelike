@@ -88,4 +88,40 @@ public class Cbdd
             Debug.Log(e);
         }
     }
+
+    public List<Score> GetScoresEasy()
+    {
+        List<Score> scores = new List<Score>();
+
+        try
+        {
+            this.connection.Open();
+
+            MySqlCommand query = this.connection.CreateCommand();
+
+            query.CommandText = "SELECT u.username, (p.niveau_perso + p.force_perso + p.argent_perso + p.tours + p.monstres + p.boss) as score, d.nom_diff FROM partie as p LEFT JOIN users as u ON p.#id_user = u.id LEFT JOIN difficulte ON p.#id_difficulte = d.id_difficulte WHERE p.#id_difficulte = 1 ORDER BY score LIMIT 10";
+
+            using (MySqlDataReader reader = query.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while(reader.Read())
+                    {
+                        //reader[0] : username
+                        //reader[1] : score
+                        //reader[2] : difficulte
+                        scores.Add(new Score(Convert.ToString(reader[0]), Convert.ToInt32(reader[1]), Convert.ToString(reader[2])));
+                    }
+                }
+            }
+
+            this.connection.Close();
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e);
+        }
+
+        return scores;
+    }
 }

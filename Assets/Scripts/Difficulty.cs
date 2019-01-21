@@ -20,6 +20,9 @@ public class Difficulty
     public int SpawnMob { get => spawnMob; }
     public int SpawnPotions { get => spawnPotions; }
 
+    static public Difficulty selected;
+    static public List<Difficulty> difficulties;
+
     public Difficulty(int Id, string Nom, int NbSalles, int DmgPlayer, int DmgMob, int SpawnMob, int SpawnPotions)
     {
         id = Id;

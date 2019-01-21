@@ -6,11 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private Cbdd bdd = new Cbdd();
+
     public void Awake()
     {
         if (File.Exists("user"))
         {
-            Debug.Log("bite");
+            Score.idUserTemp = int.Parse(File.ReadAllText("user"));
+
+            Difficulty.difficulties = bdd.GetDifficulties();
+
+            Difficulty.selected = Difficulty.difficulties[0];
         }
         else
         {
