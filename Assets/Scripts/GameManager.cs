@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int playerFoodPoints = 100;
     public int playerLvl = 1;
     public int playerXp = 0;
+    public int level = 1;
     public int playerMoney;
     public int playerMonsterKilled;
     [HideInInspector] public bool playersTurn = true;
@@ -21,7 +22,6 @@ public class GameManager : MonoBehaviour
     private Text gameOverText;
     private Text levelTextUI;
     private GameObject levelImage;
-    private int level = 1;
     private List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
@@ -69,7 +69,6 @@ public class GameManager : MonoBehaviour
 
         enemies.Clear();
         boardScript.SetupScene(level);
-
     }
 
     private void HideLevelImage()
@@ -134,7 +133,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i].hpMob <= 0)
+            if (enemies[i].realMobHp <= 0)
             {
                 enemies.RemoveAt(i);
             }

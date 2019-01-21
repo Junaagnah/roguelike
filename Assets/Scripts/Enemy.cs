@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Enemy : MovingObject
 {
-    public float mobDamage;
+    public int mobStrength;
     public int hpMob = 10;
+    public int realMobHp;
     public int wallDamage = 2;
     public int xpGiven;
     public int moneyGiven;
@@ -15,15 +16,15 @@ public class Enemy : MovingObject
     private Animator animator;
     private Transform target;
     private bool skipMove;
-    private float randomDamage;
-    private float coef;
-    private int playerDamage;
+    private int realMobStrength;
 
     protected override void Start()
     {
         GameManager.instance.AddEnemyToList(this);
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        realMobStrength = mobStrength + (int)Mathf.Log(GameManager.instance.level, 2f);
+        realMobHp = hpMob + ((int)Mathf.Log(GameManager.instance.level, 2f) * 2);
         base.Start();
     }
 
@@ -56,11 +57,8 @@ public class Enemy : MovingObject
 
     protected override void AttackPlayer(Player player)
     {
-        coef = 0.50f;
-        randomDamage = Random.Range(mobDamage * coef, mobDamage);
-        randomDamage = Mathf.Ceil(randomDamage);
-        playerDamage = (int) randomDamage;
-        player.LoseFood(playerDamage);
+        float damageFloat = (float)(realMobStrength * Difficulty.selected.DmgMob);
+        player.LoseFood(Random.Range((int)Mathf.Ceil(damageFloat), realMobStrength));
         animator.SetTrigger("enemyAttack");
         SoundManager.instance.RandomizeSfx(enemyAttack1, enemyAttack2);
     }
@@ -76,10 +74,11 @@ public class Enemy : MovingObject
 
     public void DamageMob(int loss)
     {
-        hpMob -= loss;
+        Debug.Log(loss);
+        realMobHp -= loss;
         skipMove = false;
 
-        if (hpMob <= 0)
+        if (realMobHp <= 0)
         {
             gameObject.SetActive(false);
             Destroy(gameObject);

@@ -50,7 +50,7 @@ public class Cbdd
                         //reader[9] : maxFood_spawn
                         //reader[10] : coef_money
 
-                        diffs.Add(new Difficulty(Convert.ToInt32(reader[0]), Convert.ToString(reader[1]), Convert.ToInt32(reader[2]), Convert.ToDouble(reader[3]), Convert.ToDouble(reader[4]), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[6]), Convert.ToInt32(reader[7]), Convert.ToInt32(reader[8]), Convert.ToInt32(reader[9]), Convert.ToDouble(reader[10])));
+                        diffs.Add(new Difficulty(Convert.ToInt32(reader[0]), Convert.ToString(reader[1]), Convert.ToInt32(reader[2]), Convert.ToDecimal(reader[3]), Convert.ToDecimal(reader[4]), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[6]), Convert.ToInt32(reader[7]), Convert.ToInt32(reader[8]), Convert.ToInt32(reader[9]), Convert.ToDecimal(reader[10])));
                     }
                 }
             }

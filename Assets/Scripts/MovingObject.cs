@@ -6,6 +6,7 @@ public abstract class MovingObject : MonoBehaviour
 {
     public float moveTime = 0.1f;
     public LayerMask blockingLayer;
+    public bool playerCanMove;
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
@@ -60,8 +61,10 @@ public abstract class MovingObject : MonoBehaviour
 
         if (hit.transform == null)
         {
+            playerCanMove = true;
             return;
         }
+        playerCanMove = false;
 
         //T hitComponent = hit.transform.GetComponent<T>();
         Enemy enemy = hit.transform.GetComponent<Enemy>();

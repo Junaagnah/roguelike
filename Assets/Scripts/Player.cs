@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Player : MovingObject
 {
     public int wallDamage = 1;
-    public int monsterDamage = 3;
+    public int playerStrength = 3;
     public int pointsPerFood = 10;
     public int pointsPerSoda = 20;
     public float restartLevelDelay = 1;
@@ -88,11 +88,15 @@ public class Player : MovingObject
 
         base.AttemptMove<T>(xDir, yDir);
 
-        RaycastHit2D hit;
-        if (Move(xDir, yDir, out hit))
+        if (playerCanMove)
         {
             SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
         }
+        //RaycastHit2D hit;
+        //if (Move(xDir, yDir, out hit))
+        //{
+        //    SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
+        //}
 
         CheckIfGameOver();
 
@@ -131,8 +135,9 @@ public class Player : MovingObject
 
     protected override void AttackEnnemy(Enemy enemy)
     {
-        enemy.DamageMob(monsterDamage + lvl);
-        if (enemy.hpMob <= 0)
+        float damageFloat = (float) (playerStrength * Difficulty.selected.DmgPlayer);
+        enemy.DamageMob(Random.Range((int)Mathf.Ceil(damageFloat), playerStrength));
+        if (enemy.realMobHp <= 0)
         {
             XpGain(enemy.xpGiven);
             MoneyGain(enemy.moneyGiven);
