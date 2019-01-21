@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     private bool firstRun = true;
     private bool gameOver = false;
     private Score score = new Score(Score.idUserTemp);
-
     // Start is called before the first frame update
     void Awake()
     {

@@ -30,7 +30,7 @@ public class Cbdd
 
             MySqlCommand query = this.connection.CreateCommand();
 
-            query.CommandText = "SELECT id_difficulte, nom_diff, nb_salles, dmg_player, dmg_mob, spawn_mob, spawn_potions FROM difficulte";
+            query.CommandText = "SELECT id_difficulte, nom_diff, level_length, dmg_player, dmg_mob, spawn_mob, minSpawn_wall, maxSpawn_wall, minFood_spawn, maxFood_spawn, coef_money FROM difficulte";
 
             using (MySqlDataReader reader = query.ExecuteReader())
             {
@@ -44,9 +44,13 @@ public class Cbdd
                         //reader[3] : DmgPlayer
                         //reader[4] : DmgMob
                         //reader[5] : SpawnMob
-                        //reader[6] : SpawnPotions
+                        //reader[6] : minSpawn_wall
+                        //reader[7] : maxSpawn_wall
+                        //reader[8] : minFood_spawn
+                        //reader[9] : maxFood_spawn
+                        //reader[10] : coef_money
 
-                        diffs.Add(new Difficulty(Convert.ToInt32(reader[0]), Convert.ToString(reader[1]), Convert.ToInt32(reader[2]), Convert.ToInt32(reader[3]), Convert.ToInt32(reader[4]), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[6])));
+                        diffs.Add(new Difficulty(Convert.ToInt32(reader[0]), Convert.ToString(reader[1]), Convert.ToInt32(reader[2]), Convert.ToDouble(reader[3]), Convert.ToDouble(reader[4]), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[6]), Convert.ToInt32(reader[7]), Convert.ToInt32(reader[8]), Convert.ToInt32(reader[9]), Convert.ToDouble(reader[10])));
                     }
                 }
             }

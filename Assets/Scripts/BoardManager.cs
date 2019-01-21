@@ -19,10 +19,10 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public int columns = 21;
-    public int rows = 21;
-    public Count wallCount = new Count(5, 9);
-    public Count foodCount = new Count(60, 80);
+    private int columns = Difficulty.selected.RoomLength;
+    private int rows = Difficulty.selected.RoomLength;
+    private Count wallCount = new Count(Difficulty.selected.MinSpawnWall, Difficulty.selected.MaxSpawnWall);
+    private Count foodCount = new Count(Difficulty.selected.MinSpawnFood, Difficulty.selected.MaxSpawnFood);
     public GameObject exit;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
@@ -112,7 +112,7 @@ public class BoardManager : MonoBehaviour
         LayoutObjectAtRandom(wallTiles, wallCount.minimum, wallCount.maximum);
         LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
 
-        int enemyCount = (int)Mathf.Log(level, 2f);
+        int enemyCount = (int)Mathf.Log(level, 2f) + Difficulty.selected.SpawnMob;
         LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
 
         Instantiate(exit, new Vector3(columns - 2, rows - 2, 0f), Quaternion.identity);
