@@ -89,7 +89,7 @@ public class Cbdd
         }
     }
 
-    public List<Score> GetScoresEasy()
+    public List<Score> GetScores(int diff)
     {
         List<Score> scores = new List<Score>();
 
@@ -99,7 +99,9 @@ public class Cbdd
 
             MySqlCommand query = this.connection.CreateCommand();
 
-            query.CommandText = "SELECT u.username, (p.niveau_perso + p.force_perso + p.argent_perso + p.tours + p.monstres + p.boss) as score, d.nom_diff FROM partie as p LEFT JOIN users as u ON p.#id_user = u.id LEFT JOIN difficulte ON p.#id_difficulte = d.id_difficulte WHERE p.#id_difficulte = 1 ORDER BY score LIMIT 10";
+            query.CommandText = "SELECT u.username, (p.niveau_perso + p.force_perso + p.argent_perso + p.tours + p.monstres + p.boss) as score, d.nom_diff FROM partie as p LEFT JOIN users as u ON p.#id_user = u.id LEFT JOIN difficulte ON p.#id_difficulte = d.id_difficulte WHERE p.#id_difficulte = @idDiff ORDER BY score LIMIT 10";
+
+            query.Parameters.AddWithValue("@idDiff", diff);
 
             using (MySqlDataReader reader = query.ExecuteReader())
             {
