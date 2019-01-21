@@ -14,7 +14,7 @@ public class Difficulty
     readonly int maxSpawnWall;
     readonly int minSpawnFood;
     readonly int maxSpawnFood;
-    readonly double coefMoney;
+    readonly decimal coefMoney;
 
     public int Id { get => id; }
     public string Nom { get => nom; }
@@ -26,14 +26,14 @@ public class Difficulty
     public int MaxSpawnWall { get => maxSpawnWall; }
     public int MinSpawnFood { get => minSpawnFood; }
     public int MaxSpawnFood { get => maxSpawnFood; }
-    public double CoefMoney { get => coefMoney; }
+    public decimal CoefMoney { get => coefMoney; }
 
 
 
     static public Difficulty selected;
     static public List<Difficulty> difficulties;
 
-    public Difficulty(int Id, string Nom, int RoomLength, double DmgPlayer, double DmgMob, int SpawnMob, int MinSpawnWall, int MaxSpawnWall, int MinSpawnFood, int MaxSpawnFood, double CoefMoney)
+    public Difficulty(int Id, string Nom, int RoomLength, double DmgPlayer, double DmgMob, int SpawnMob, int MinSpawnWall, int MaxSpawnWall, int MinSpawnFood, int MaxSpawnFood, decimal CoefMoney)
     {
         id = Id;
         nom = Nom;

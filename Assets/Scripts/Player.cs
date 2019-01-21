@@ -173,7 +173,8 @@ public class Player : MovingObject
 
     private void MoneyGain (int moneyGained)
     {
-        money += moneyGained;
+        float moneyFloat = (float) (moneyGained * Difficulty.selected.CoefMoney);
+        money += (int)Mathf.Ceil(moneyFloat);
     }
 
     //private void CheckIfGameOver()
