@@ -83,7 +83,6 @@ public abstract class MovingObject : MonoBehaviour
     }
 
     protected abstract void BreakWall(Wall wall);
-
     protected abstract void AttackEnnemy(Enemy enemy);
     protected abstract void AttackPlayer(Player player);
 }

@@ -12,6 +12,8 @@ public class Player : MovingObject
     public int pointsPerSoda = 20;
     public float restartLevelDelay = 1;
     public Text foodText;
+    public Text playerLvlText;
+    public Text playerMoneyText;
     public AudioClip moveSound1;
     public AudioClip moveSound2;
     public AudioClip eatSound1;
@@ -27,6 +29,10 @@ public class Player : MovingObject
 
     private Animator animator;
     private int food;
+    private int lvl;
+    private int xp;
+    private int monsterKilled;
+    private int money;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -34,8 +40,16 @@ public class Player : MovingObject
         animator = GetComponent<Animator>();
 
         food = GameManager.instance.playerFoodPoints;
+        lvl = GameManager.instance.playerLvl;
+        xp = GameManager.instance.playerXp;
+        monsterKilled = GameManager.instance.playerMonsterKilled;
+        money = GameManager.instance.playerMoney;
 
         foodText.text = "Food: " + food;
+
+        playerLvlText.text = "LVL " + lvl;
+
+        playerMoneyText.text = "Coins: " + money;
 
         base.Start();
     }
@@ -43,6 +57,10 @@ public class Player : MovingObject
     private void OnDisable()
     {
         GameManager.instance.playerFoodPoints = food;
+        GameManager.instance.playerLvl = lvl;
+        GameManager.instance.playerXp = xp;
+        GameManager.instance.playerMonsterKilled = monsterKilled;
+        GameManager.instance.playerMoney = money;
     }
 
     // Update is called once per frame
@@ -113,10 +131,17 @@ public class Player : MovingObject
 
     protected override void AttackEnnemy(Enemy enemy)
     {
-        enemy.DamageMob(monsterDamage);
+        enemy.DamageMob(monsterDamage + lvl);
+        if (enemy.hpMob <= 0)
+        {
+            XpGain(enemy.xpGiven);
+            MoneyGain(enemy.moneyGiven);
+            monsterKilled++;
+        }
         animator.SetTrigger("playerChop");
-        //SoundManager.instance.RandomizeSfx(swooshSound1, swooshSound2);
         GetComponent<AudioSource>().PlayOneShot(swooshSound);
+        playerLvlText.text = "LVL " + lvl;
+        playerMoneyText.text = "Coins: " + money;
     }
 
     protected override void AttackPlayer(Player player) { }
@@ -133,6 +158,22 @@ public class Player : MovingObject
         GetComponent<AudioSource>().PlayOneShot(getHit);
         foodText.text = "-" + loss + " Food: " + food;
         CheckIfGameOver();
+    }
+
+    private void XpGain (int xpGained)
+    {
+        xp += xpGained;
+
+        if (xp >= 100)
+        {
+            lvl++;
+            xp -= 100;
+        }
+    }
+
+    private void MoneyGain (int moneyGained)
+    {
+        money += moneyGained;
     }
 
     //private void CheckIfGameOver()

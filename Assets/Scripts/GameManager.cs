@@ -11,12 +11,17 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public BoardManager boardScript;
     public int playerFoodPoints = 100;
+    public int playerLvl = 1;
+    public int playerXp = 0;
+    public int playerMoney;
+    public int playerMonsterKilled;
     [HideInInspector] public bool playersTurn = true;
 
     private Text levelText;
     private Text gameOverText;
+    private Text levelTextUI;
     private GameObject levelImage;
-    private int level = 1;
+    private int level = 10;
     private List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
@@ -56,13 +61,16 @@ public class GameManager : MonoBehaviour
 
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        levelTextUI = GameObject.Find("Etage").GetComponent<Text>();
         gameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
         levelText.text = "Etage " + level;
+        levelTextUI.text = levelText.text;
         levelImage.SetActive(true);
         Invoke("HideLevelImage", levelStartDelay);
 
         enemies.Clear();
         boardScript.SetupScene(level);
+
     }
 
     private void HideLevelImage()

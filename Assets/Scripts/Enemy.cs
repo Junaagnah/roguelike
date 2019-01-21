@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Enemy : MovingObject
 {
-    public int playerDamage;
+    public float mobDamage;
     public int hpMob = 10;
     public int wallDamage = 2;
+    public int xpGiven;
+    public int moneyGiven;
     public AudioClip enemyAttack1;
     public AudioClip enemyAttack2;
 
     private Animator animator;
     private Transform target;
     private bool skipMove;
+    private float randomDamage;
+    private float coef;
+    private int playerDamage;
 
     protected override void Start()
     {
@@ -24,15 +29,16 @@ public class Enemy : MovingObject
 
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
+
         if (skipMove)
         {
             skipMove = false;
             return;
         }
 
-        base.AttemptMove<T>(xDir, yDir);
-
         skipMove = true;
+
+        base.AttemptMove<T>(xDir, yDir);
     }
 
     public void MoveEnemy()
@@ -50,6 +56,10 @@ public class Enemy : MovingObject
 
     protected override void AttackPlayer(Player player)
     {
+        coef = 0.50f;
+        randomDamage = Random.Range(mobDamage * coef, mobDamage);
+        randomDamage = Mathf.Ceil(randomDamage);
+        playerDamage = (int) randomDamage;
         player.LoseFood(playerDamage);
         animator.SetTrigger("enemyAttack");
         SoundManager.instance.RandomizeSfx(enemyAttack1, enemyAttack2);
@@ -59,6 +69,7 @@ public class Enemy : MovingObject
         wall.DamageWall(wallDamage);
         animator.SetTrigger("enemyAttack");
         SoundManager.instance.RandomizeSfx(enemyAttack1, enemyAttack2);
+        skipMove = false;
     }
 
     protected override void AttackEnnemy(Enemy enemy) { }
