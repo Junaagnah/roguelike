@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private Text gameOverText;
     private Text levelTextUI;
     private GameObject levelImage;
-    private int level = 10;
+    private int level = 1;
     private List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;

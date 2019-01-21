@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 public class Cbdd
 {
     private MySqlConnection connection;
+    private int score;
 
     public Cbdd()
     {
@@ -99,7 +100,7 @@ public class Cbdd
 
             MySqlCommand query = this.connection.CreateCommand();
 
-            query.CommandText = "SELECT u.username, (p.niveau_perso + p.force_perso + p.argent_perso + p.tours + p.monstres + p.boss) as score, d.nom_diff FROM partie as p LEFT JOIN users as u ON p.#id_user = u.id LEFT JOIN difficulte ON p.#id_difficulte = d.id_difficulte WHERE p.#id_difficulte = @idDiff ORDER BY score LIMIT 10";
+            query.CommandText = "SELECT u.username, (p.niveau_perso + p.force_perso + p.argent_perso + p.tours + p.monstres + p.boss) as scoreUser FROM partie as p LEFT JOIN users as u ON p.FKid_user = u.id LEFT JOIN difficulte as d ON p.FKid_difficulte = d.id_difficulte WHERE p.FKid_difficulte = @idDiff ORDER BY scoreUser DESC LIMIT 10";
 
             query.Parameters.AddWithValue("@idDiff", diff);
 
@@ -111,8 +112,21 @@ public class Cbdd
                     {
                         //reader[0] : username
                         //reader[1] : score
-                        //reader[2] : difficulte
-                        scores.Add(new Score(Convert.ToString(reader[0]), Convert.ToInt32(reader[1]), Convert.ToString(reader[2])));
+                        score = Convert.ToInt32(reader[1]);
+
+                        switch(diff)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                score *= 2;
+                                break;
+                            case 3:
+                                score *= 3;
+                                break;
+                        }
+
+                        scores.Add(new Score(Convert.ToString(reader[0]), score));
                     }
                 }
             }

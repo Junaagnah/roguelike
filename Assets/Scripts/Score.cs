@@ -5,7 +5,6 @@ using UnityEngine;
 public class Score
 {
     readonly int idUser;
-    readonly string nomDiff;
     readonly string pseudoUser;
     readonly int scoreUser;
     private int niveauPerso;
@@ -16,7 +15,6 @@ public class Score
     private int boss;
 
     public int IdUser { get => idUser; }
-    public string NomDiff { get => nomDiff; }
     public string PseudoUser { get => pseudoUser; }
     public int ScoreUser { get => scoreUser; }
 
@@ -34,11 +32,10 @@ public class Score
         idUser = Id;
     }
 
-    public Score(string PseudoUser, int Score, string NomDiff)
+    public Score(string PseudoUser, int Score)
     {
         pseudoUser = PseudoUser;
         scoreUser = Score;
-        nomDiff = NomDiff;
     }
 
     public void SaveGame(int niveau, int force, int argent, int tours, int monstres, int boss)
