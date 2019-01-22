@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     private Cbdd bdd = new Cbdd();
-    private string userFile = "..\\user";
+    private string userFile = "user";
 
     public void Awake()
     {
