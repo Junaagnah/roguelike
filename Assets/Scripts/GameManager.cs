@@ -89,8 +89,13 @@ public class GameManager : MonoBehaviour
         gameOverText.text = "Press R to restart. Press Escape to quit.";
         levelImage.SetActive(true);
         GameObject.FindGameObjectWithTag("Player").SetActive(false);
-        score.SaveGame(level, playerStrength, playerMoney, playerTurns, playerMonsterKilled, playerBossKilled);
-        bdd.SaveGame(score, Difficulty.selected);
+
+        //Si le joueur n'est pas hors ligne, on enregistre son score
+        if (Difficulty.selected.Nom != "Offline")
+        {
+            score.SaveGame(level, playerStrength, playerMoney, playerTurns, playerMonsterKilled, playerBossKilled);
+            bdd.SaveGame(score, Difficulty.selected);
+        }
     }
 
     // Update is called once per frame

@@ -74,7 +74,6 @@ public class Enemy : MovingObject
 
     public void DamageMob(int loss)
     {
-        Debug.Log(loss);
         realMobHp -= loss;
         skipMove = false;
 

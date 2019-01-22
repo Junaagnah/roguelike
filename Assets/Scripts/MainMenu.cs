@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     private Cbdd bdd = new Cbdd();
-    private string userFile = "user";
+    private string userFile = "..\\user";
 
     public void Awake()
     {
@@ -16,6 +17,12 @@ public class MainMenu : MonoBehaviour
             if (File.ReadAllText(userFile) == "offline")
             {
                 //@TODO: créer une difficulté par défaut & empêcher le joueur de sauvegarder son score
+                //Si le joueur est hors-ligne, on assigne automatiquement la difficulté facile et on la nomme Offline pour plus tard
+                Difficulty.selected = new Difficulty(0, "Offline", 11, (decimal)0.9, (decimal)0.3, 0, 8, 12, 3, 4, 1);
+
+                //On rend les boutons scores et options inactifs car ils sont dépendants de la base de données
+                GameObject.Find("ScoresButton").SetActive(false);
+                GameObject.Find("OptionsButton").SetActive(false);
             }
             else
             {
