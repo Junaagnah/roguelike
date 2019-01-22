@@ -7,13 +7,15 @@ using UnityEngine.SceneManagement;
 public class Player : MovingObject
 {
     public int wallDamage = 1;
-    public int playerStrength = 3;
+    public int playerStrength;
     public int pointsPerFood = 10;
     public int pointsPerSoda = 20;
     public float restartLevelDelay = 1;
     public Text foodText;
     public Text playerLvlText;
     public Text playerMoneyText;
+    public Text playerXpText;
+    public Text playerStrengthText;
     public AudioClip moveSound1;
     public AudioClip moveSound2;
     public AudioClip eatSound1;
@@ -44,12 +46,14 @@ public class Player : MovingObject
         xp = GameManager.instance.playerXp;
         monsterKilled = GameManager.instance.playerMonsterKilled;
         money = GameManager.instance.playerMoney;
+        playerStrength = GameManager.instance.playerStrength;
 
         foodText.text = "Food: " + food;
-
         playerLvlText.text = "LVL " + lvl;
-
         playerMoneyText.text = "Coins: " + money;
+        playerXpText.text = "XP: " + xp + "/100";
+        playerStrengthText.text = "Strength: " + playerStrength;
+
 
         base.Start();
     }
@@ -61,6 +65,7 @@ public class Player : MovingObject
         GameManager.instance.playerXp = xp;
         GameManager.instance.playerMonsterKilled = monsterKilled;
         GameManager.instance.playerMoney = money;
+        GameManager.instance.playerStrength = playerStrength;
     }
 
     // Update is called once per frame
@@ -145,7 +150,7 @@ public class Player : MovingObject
         }
         animator.SetTrigger("playerChop");
         GetComponent<AudioSource>().PlayOneShot(swooshSound);
-        playerLvlText.text = "LVL " + lvl;
+        foodText.text = "Food: " + food;
         playerMoneyText.text = "Coins: " + money;
     }
 
@@ -172,8 +177,14 @@ public class Player : MovingObject
         if (xp >= 100)
         {
             lvl++;
+            playerStrength++;
+            food += 25;
             xp -= 100;
+            playerLvlText.text = "LVL " + lvl;
+            playerXpText.text = "XP: " + xp + "/100";
+            playerStrengthText.text = "Strength: " + playerStrength;
         }
+        playerXpText.text = "XP: " + xp + "/100";
     }
 
     private void MoneyGain (int moneyGained)

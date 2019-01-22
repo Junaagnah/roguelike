@@ -13,9 +13,10 @@ public class GameManager : MonoBehaviour
     public int playerFoodPoints = 200;
     public int playerLvl = 1;
     public int playerXp = 0;
-    public int level = 1;
     public int playerMoney;
     public int playerMonsterKilled;
+    public int playerStrength = 3;
+    public int level = 1;
     [HideInInspector] public bool playersTurn = true;
 
     private Text levelText;
@@ -51,7 +52,6 @@ public class GameManager : MonoBehaviour
         }
 
         level++;
-        playerXp += 25;
         InitGame();
     }
 
