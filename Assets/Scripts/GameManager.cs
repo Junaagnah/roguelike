@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public float levelStartDelay = 2f;
-    public float turnDelay = 0.1f;
+    private float turnDelay = 0.1f;
     public static GameManager instance = null;
     public BoardManager boardScript;
     public int playerFoodPoints = 200;
@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     private bool doingSetup;
     private bool firstRun = true;
     private bool gameOver = false;
+
+    public List<Vector2> mobMovePos = new List<Vector2>();
+
     private Score score = new Score(Score.idUserTemp);
     private Cbdd bdd = new Cbdd();
 
@@ -169,10 +172,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 enemies[i].MoveEnemy();
-                yield return new WaitForSeconds(enemies[i].moveTime);
+                yield return new WaitForSeconds(enemies[i].moveTime / enemies.Count );
             }
         }
 
+        mobMovePos = new List<Vector2>();
         playersTurn = true;
         enemiesMoving = false;
     }

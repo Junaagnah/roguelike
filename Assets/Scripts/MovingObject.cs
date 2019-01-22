@@ -4,9 +4,10 @@ using UnityEngine;
 
 public abstract class MovingObject : MonoBehaviour
 {
-    public float moveTime = 0.1f;
+    [HideInInspector] public float moveTime = 0.1f;
     public LayerMask blockingLayer;
     public bool playerCanMove;
+    public bool mobCanMove = true;
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
@@ -26,18 +27,37 @@ public abstract class MovingObject : MonoBehaviour
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(xDir, yDir);
 
-        boxCollider.enabled = false;
-        hit = Physics2D.Linecast(start, end, blockingLayer);
-
-        boxCollider.enabled = true;
-
-        if (hit.transform == null)
+        foreach (Vector2 movePos in GameManager.instance.mobMovePos)
         {
-            StartCoroutine(SmoothMovement(end));
-            return true;
+            if (end == movePos)
+            {
+                mobCanMove = false;
+                break;
+            }
         }
 
-        return false;
+        if (!mobCanMove)
+        {
+            hit = new RaycastHit2D();
+            mobCanMove = true;
+            return false;
+        }
+        else
+        {
+            GameManager.instance.mobMovePos.Add(end);
+
+            boxCollider.enabled = false;
+            hit = Physics2D.Linecast(start, end, blockingLayer);
+
+            boxCollider.enabled = true;
+
+            if (hit.transform == null)
+            {
+                StartCoroutine(SmoothMovement(end));
+                return true;
+            }
+            return false;
+        }
     }
 
     protected IEnumerator SmoothMovement(Vector3 end)
