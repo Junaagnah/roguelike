@@ -102,6 +102,10 @@ public class GameManager : MonoBehaviour
             gameOverText.text = "";
             level = 0;
             playerFoodPoints = 100;
+            playerStrength = 3;
+            playerLvl = 1;
+            playerMoney = 0;
+            playerXp = 0;
             SoundManager.instance.gameOverMusic.Stop();
             SoundManager.instance.musicSource.Play();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -113,7 +117,16 @@ public class GameManager : MonoBehaviour
         }
 
         if (playersTurn || enemiesMoving || doingSetup)
+        {
+            if (playersTurn)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    playersTurn = false;
+                }
+            }
             return;
+        }    
 
         StartCoroutine(MoveEnemies());
     }

@@ -8,8 +8,9 @@ public class Player : MovingObject
 {
     public int wallDamage = 1;
     public int playerStrength;
-    public int pointsPerFood = 10;
-    public int pointsPerSoda = 20;
+    public int pointsPerFoodMin = 10;
+    public int pointsPerFoodMax = 20;
+    public int strengthPotionValue;
     public float restartLevelDelay = 1;
     public Text foodText;
     public Text playerLvlText;
@@ -90,6 +91,7 @@ public class Player : MovingObject
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
         foodText.text = "Food: " + food;
+        playerStrengthText.text = "Strength: " + playerStrength;
 
         base.AttemptMove<T>(xDir, yDir);
 
@@ -117,15 +119,31 @@ public class Player : MovingObject
         }
         else if (other.tag == "Food")
         {
-            food += pointsPerFood;
-            foodText.text = "+" + pointsPerFood + " Food: " + food;
+            int foodGain = Random.Range(pointsPerFoodMin, pointsPerFoodMax);
+            food += foodGain;
+            foodText.text = "+" + foodGain + " Food: " + food;
             SoundManager.instance.RandomizeSfx(eatSound1, eatSound2);
             other.gameObject.SetActive(false);
         }
         else if (other.tag == "Soda")
         {
-            food += pointsPerSoda;
-            foodText.text = "+" + pointsPerSoda + " Food: " + food;
+            strengthPotionValue = 0;
+            while (strengthPotionValue == 0)
+            {
+                strengthPotionValue = Random.Range(-1, 2);
+            }
+
+            if (strengthPotionValue < 0 && playerStrength == 1)
+            {
+                return;
+            }
+            else
+            {
+                playerStrength += strengthPotionValue;
+            }
+
+            string strengthText = strengthPotionValue.ToString("+#;-#;0");
+            playerStrengthText.text = strengthText + " Strength: " + playerStrength;
             SoundManager.instance.RandomizeSfx(drinkSound1, drinkSound1);
             other.gameObject.SetActive(false);
         }
