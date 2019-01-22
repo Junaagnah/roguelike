@@ -36,6 +36,8 @@ public class Player : MovingObject
     private int xp;
     private int monsterKilled;
     private int money;
+    private int turns;
+    private int bossKilled;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -48,6 +50,8 @@ public class Player : MovingObject
         monsterKilled = GameManager.instance.playerMonsterKilled;
         money = GameManager.instance.playerMoney;
         playerStrength = GameManager.instance.playerStrength;
+        bossKilled = GameManager.instance.playerBossKilled;
+        turns = GameManager.instance.playerTurns;
 
         foodText.text = "Food: " + food;
         playerLvlText.text = "LVL " + lvl;
@@ -67,6 +71,8 @@ public class Player : MovingObject
         GameManager.instance.playerMonsterKilled = monsterKilled;
         GameManager.instance.playerMoney = money;
         GameManager.instance.playerStrength = playerStrength;
+        GameManager.instance.playerTurns = turns;
+        GameManager.instance.playerBossKilled = bossKilled;
     }
 
     // Update is called once per frame
@@ -90,6 +96,9 @@ public class Player : MovingObject
 
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
+        turns++;
+        Debug.Log(turns);
+
         foodText.text = "Food: " + food;
         playerStrengthText.text = "Strength: " + playerStrength;
 

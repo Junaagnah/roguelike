@@ -73,7 +73,7 @@ public class Cbdd
 
             MySqlCommand query = this.connection.CreateCommand();
 
-            query.CommandText = "INSERT INTO partie (date, niveau_perso, force_perso, argent_perso, tours, monstres, boss, #id_user, #id_difficulte) VALUES (NOW(), @niveau, @force, @argent, @tours, @monstres, @boss, @iduser, @iddiff)";
+            query.CommandText = "INSERT INTO partie (date, niveau_perso, force_perso, argent_perso, tours, monstres, boss, FKid_user, FKid_difficulte) VALUES (current_timestamp(), @niveau, @force, @argent, @tours, @monstres, @boss, @iduser, @iddiff)";
 
             query.Parameters.AddWithValue("@niveau", score.NiveauPerso);
             query.Parameters.AddWithValue("@force", score.ForcePerso);

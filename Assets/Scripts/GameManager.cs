@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
     public int playerXp = 0;
     public int playerMoney;
     public int playerMonsterKilled;
+    public int playerBossKilled = 0;
     public int playerStrength = 3;
+    public int playerTurns = 0;
     public int level = 1;
     [HideInInspector] public bool playersTurn = true;
 
@@ -87,6 +89,8 @@ public class GameManager : MonoBehaviour
         gameOverText.text = "Press R to restart. Press Escape to quit.";
         levelImage.SetActive(true);
         GameObject.FindGameObjectWithTag("Player").SetActive(false);
+        score.SaveGame(level, playerStrength, playerMoney, playerTurns, playerMonsterKilled, playerBossKilled);
+        bdd.SaveGame(score, Difficulty.selected);
     }
 
     // Update is called once per frame
@@ -101,6 +105,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject.FindGameObjectWithTag("Player").SetActive(false);
             }
+            score = new Score(Score.idUserTemp);
             gameOverText.text = "";
             level = 0;
             playerFoodPoints = 100;
