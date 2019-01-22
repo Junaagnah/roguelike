@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public float turnDelay = 0.1f;
     public static GameManager instance = null;
     public BoardManager boardScript;
-    public int playerFoodPoints = 100;
+    public int playerFoodPoints = 200;
     public int playerLvl = 1;
     public int playerXp = 0;
     public int level = 1;
@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         }
 
         level++;
+        playerXp += 25;
         InitGame();
     }
 
