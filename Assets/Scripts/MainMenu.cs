@@ -12,11 +12,18 @@ public class MainMenu : MonoBehaviour
     {
         if (File.Exists("user"))
         {
-            Score.idUserTemp = int.Parse(File.ReadAllText("user"));
+            if (File.ReadAllText("user") == "offline")
+            {
+                //@TODO: créer une difficulté par défaut & empêcher le joueur de sauvegarder son score
+            }
+            else
+            {
+                Score.idUserTemp = int.Parse(File.ReadAllText("user"));
 
-            Difficulty.difficulties = bdd.GetDifficulties();
+                Difficulty.difficulties = bdd.GetDifficulties();
 
-            Difficulty.selected = Difficulty.difficulties[0];
+                Difficulty.selected = Difficulty.difficulties[0];
+            }
         }
         else
         {

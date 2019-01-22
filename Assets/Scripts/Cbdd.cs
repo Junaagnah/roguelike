@@ -120,8 +120,6 @@ public class Cbdd
 
                         switch(diff)
                         {
-                            case 1:
-                                break;
                             case 2:
                                 score *= 2;
                                 break;
