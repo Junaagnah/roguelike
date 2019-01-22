@@ -97,7 +97,6 @@ public class Player : MovingObject
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
         turns++;
-        Debug.Log(turns);
 
         foodText.text = "Food: " + food;
         playerStrengthText.text = "Strength: " + playerStrength;

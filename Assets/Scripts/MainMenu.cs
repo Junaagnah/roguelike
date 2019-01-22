@@ -7,18 +7,19 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     private Cbdd bdd = new Cbdd();
+    private string userFile = "user";
 
     public void Awake()
     {
-        if (File.Exists("user"))
+        if (File.Exists(userFile))
         {
-            if (File.ReadAllText("user") == "offline")
+            if (File.ReadAllText(userFile) == "offline")
             {
                 //@TODO: créer une difficulté par défaut & empêcher le joueur de sauvegarder son score
             }
             else
             {
-                Score.idUserTemp = int.Parse(File.ReadAllText("user"));
+                Score.idUserTemp = int.Parse(File.ReadAllText(userFile));
 
                 Difficulty.difficulties = bdd.GetDifficulties();
 

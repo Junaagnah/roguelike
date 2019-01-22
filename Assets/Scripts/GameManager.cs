@@ -108,11 +108,14 @@ public class GameManager : MonoBehaviour
             score = new Score(Score.idUserTemp);
             gameOverText.text = "";
             level = 0;
-            playerFoodPoints = 100;
+            playerFoodPoints = 200;
             playerStrength = 3;
             playerLvl = 1;
             playerMoney = 0;
             playerXp = 0;
+            playerTurns = 0;
+            playerMonsterKilled = 0;
+            playerBossKilled = 0;
             SoundManager.instance.gameOverMusic.Stop();
             SoundManager.instance.musicSource.Play();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
