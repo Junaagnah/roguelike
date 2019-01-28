@@ -7,8 +7,8 @@ public abstract class MovingObject : MonoBehaviour
     [HideInInspector] public float moveTime = 0.1f;
     public LayerMask blockingLayer;
     public bool playerCanMove;
-    public bool mobCanMove = true;
 
+    private bool mobCanMove = true;
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
     private float inverseMovetime;
@@ -43,16 +43,15 @@ public abstract class MovingObject : MonoBehaviour
 
         boxCollider.enabled = true;
 
-        if (hit.transform == null)
+        if (hit.transform == null && mobCanMove)
         {
-            if (!mobCanMove)
-            {
-                return false;
-            }
             StartCoroutine(SmoothMovement(end));
             return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
     protected IEnumerator SmoothMovement(Vector3 end)

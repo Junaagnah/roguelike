@@ -78,6 +78,8 @@ public class Player : MovingObject
     // Update is called once per frame
     void Update()
     {
+        GameManager.instance.mobMovePos.Clear();
+
         if (!GameManager.instance.playersTurn) return;
 
 
@@ -143,7 +145,7 @@ public class Player : MovingObject
 
             if (strengthPotionValue < 0 && playerStrength == 1)
             {
-                return;
+                strengthPotionValue = -1;
             }
             else
             {

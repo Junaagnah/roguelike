@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public int playerMoney;
     public int playerMonsterKilled;
     public int playerBossKilled = 0;
-    public int playerStrength = 3;
+    public int playerStrength = 1;
     public int playerTurns = 0;
     public int level = 1;
     [HideInInspector] public bool playersTurn = true;
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
             gameOverText.text = "";
             level = 0;
             playerFoodPoints = 200;
-            playerStrength = 3;
+            playerStrength = 1;
             playerLvl = 1;
             playerMoney = 0;
             playerXp = 0;
@@ -172,12 +172,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 enemies[i].MoveEnemy();
-                yield return new WaitForSeconds(enemies[i].moveTime / enemies.Count );
+                yield return new WaitForSeconds(enemies[i].moveTime / enemies.Count);
             }
         }
 
-        mobMovePos = new List<Vector2>();
-        playersTurn = true;
         enemiesMoving = false;
+        playersTurn = true;
     }
 }
