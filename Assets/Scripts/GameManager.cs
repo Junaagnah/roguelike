@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 enemies[i].MoveEnemy();
-                yield return new WaitForSeconds(enemies[i].moveTime / enemies.Count);
+                yield return new WaitForSeconds(enemies[i].moveTime);
             }
         }
 
