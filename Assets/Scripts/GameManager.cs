@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public int playerMoney;
     public int playerMonsterKilled;
     public int playerBossKilled = 0;
-    public int playerStrength = 1;
+    public int playerStrength = 3;
     public int playerTurns = 0;
     public int level = 1;
     [HideInInspector] public bool playersTurn = true;
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
             gameOverText.text = "";
             level = 0;
             playerFoodPoints = 200;
-            playerStrength = 1;
+            playerStrength = 3;
             playerLvl = 1;
             playerMoney = 0;
             playerXp = 0;
