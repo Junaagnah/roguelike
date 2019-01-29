@@ -19,11 +19,14 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    private int columns = Difficulty.selected.RoomLength;
-    private int rows = Difficulty.selected.RoomLength;
+    private int columns;
+    private int rows;
     private Count wallCount = new Count(Difficulty.selected.MinSpawnWall, Difficulty.selected.MaxSpawnWall);
     private Count foodCount = new Count(Difficulty.selected.MinSpawnFood, Difficulty.selected.MaxSpawnFood);
     public GameObject exit;
+    public GameObject boss;
+    public GameObject food;
+    public GameObject mob;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject[] foodTiles;
@@ -59,9 +62,6 @@ public class BoardManager : MonoBehaviour
             for (int y = 0; y < rows ; y++)
             {
                 GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
-
-                //if ((x == -1 || x == columns || y == -1 || y == rows || x % 8 == 0 || y % 8 == 0) && (x != 0 && y != 0 && x != columns -1 && y != rows -1))
-                //if ((x % 10 == 0 || y % 10 == 0) && (x != (columns - 1)/4) && (y != (rows - 1) / 4))
 
                 if (x != 0 && y != 0 && x != columns -1 && y != rows -1)
                 {
@@ -107,14 +107,45 @@ public class BoardManager : MonoBehaviour
 
     public void SetupScene(int level)
     {
-        BoardSetup();
-        InitializeList();
-        LayoutObjectAtRandom(wallTiles, wallCount.minimum, wallCount.maximum);
-        LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
+        if (level % 10 == 0)
+        {
+            columns = 11;
+            rows = 11;
+            BoardSetup();
+            InitializeList();
+            LayoutObjectAtRandom(foodTiles, 1, 3);
+            Instantiate(boss, new Vector3(5, 5, 0f), Quaternion.identity);
 
-        int enemyCount = (int)Mathf.Log(level, 2f) + Difficulty.selected.SpawnMob;
-        LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
+        }
+        else
+        {
+            columns = Difficulty.selected.RoomLength;
+            rows = Difficulty.selected.RoomLength;
 
+            BoardSetup();
+            InitializeList();
+            LayoutObjectAtRandom(wallTiles, wallCount.minimum, wallCount.maximum);
+            LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
+
+            int enemyCount = (int)Mathf.Log(level, 2f) + Difficulty.selected.SpawnMob;
+            LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
+
+            InstantiateExit();
+        }
+    }
+
+    public void BossInvokeMob()
+    {
+        LayoutObjectAtRandom(enemyTiles, 1, 1);
+    }
+
+    public void FoodInvoke()
+    {
+        LayoutObjectAtRandom(foodTiles, 1, 1);
+    }
+
+    public void InstantiateExit()
+    {
         Instantiate(exit, new Vector3(columns - 2, rows - 2, 0f), Quaternion.identity);
     }
 }

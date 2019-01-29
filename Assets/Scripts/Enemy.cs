@@ -6,7 +6,7 @@ public class Enemy : MovingObject
 {
     public int mobStrength;
     public int hpMob = 10;
-    public int realMobHp;
+    [HideInInspector] public int realMobHp;
     public int wallDamage = 2;
     public int xpGiven;
     public int moneyGiven;
@@ -30,11 +30,28 @@ public class Enemy : MovingObject
 
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
-
-        if (skipMove)
+        if (gameObject.tag == "Boss")
         {
-            skipMove = false;
-            return;
+            if (skipMove)
+            {
+                if (GameManager.instance.bossTurn % 4 == 0)
+                {
+                    skipMove = false;
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+        else
+        {
+            if(skipMove)
+            {
+                skipMove = false;
+                return;
+            }
         }
 
         skipMove = true;
@@ -79,6 +96,10 @@ public class Enemy : MovingObject
 
         if (realMobHp <= 0)
         {
+            if (gameObject.tag == "boss")
+            {
+                GameManager.instance.boardScript.InstantiateExit();
+            }
             gameObject.SetActive(false);
             Destroy(gameObject);
         }

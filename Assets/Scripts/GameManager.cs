@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public int level = 1;
     [HideInInspector] public bool playersTurn = true;
     public bool enemyIsMoving;
+    [HideInInspector] public int bossTurn = 0;
 
     private Text levelText;
     private Text gameOverText;
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour
         levelTextUI.text = levelText.text;
         levelImage.SetActive(true);
         Invoke("HideLevelImage", levelStartDelay);
+        bossTurn = 0;
 
         enemies.Clear();
         boardScript.SetupScene(level);
@@ -130,6 +132,7 @@ public class GameManager : MonoBehaviour
             playerTurns = 0;
             playerMonsterKilled = 0;
             playerBossKilled = 0;
+            bossTurn = 0;
             SoundManager.instance.gameOverMusic.Stop();
             SoundManager.instance.musicSource.Play();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -162,8 +165,22 @@ public class GameManager : MonoBehaviour
 
     IEnumerator MoveEnemies()
     {
+        bossTurn++;
         enemiesMoving = true;
         DateTime start = DateTime.Now;
+
+        if (level % 10 == 0)
+        {
+            if (bossTurn != 0 && bossTurn % 20 == 0)
+            {
+                this.boardScript.BossInvokeMob();
+            }
+            else if (bossTurn != 0 && bossTurn % 15 == 0)
+            {
+                this.boardScript.FoodInvoke();
+            }
+        }
+
         for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i].realMobHp <= 0)
