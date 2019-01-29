@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class MovingObject : MonoBehaviour
 {
-    [HideInInspector] public float moveTime = 0.1f;
+    protected float moveTime = 0.1f;
     public LayerMask blockingLayer;
     public bool playerCanMove;
 
-    private bool mobCanMove = true;
+    public bool mobCanMove = true;
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
     private float inverseMovetime;
@@ -50,6 +50,7 @@ public abstract class MovingObject : MonoBehaviour
         }
         else
         {
+            this.mobCanMove = true;
             return false;
         }
     }
@@ -57,7 +58,6 @@ public abstract class MovingObject : MonoBehaviour
     protected IEnumerator SmoothMovement(Vector3 end)
     {
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-
         while (sqrRemainingDistance > float.Epsilon)
         {
             Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMovetime * Time.deltaTime);
@@ -80,7 +80,6 @@ public abstract class MovingObject : MonoBehaviour
         }
         playerCanMove = false;
 
-        //T hitComponent = hit.transform.GetComponent<T>();
         Enemy enemy = hit.transform.GetComponent<Enemy>();
         Wall wall = hit.transform.GetComponent<Wall>();
         Player player = hit.transform.GetComponent<Player>();

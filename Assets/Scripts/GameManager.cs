@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public float levelStartDelay = 2f;
-    private float turnDelay = 0.1f;
+    private float turnDelay = 0.23f;
     public static GameManager instance = null;
     public BoardManager boardScript;
     public int playerFoodPoints = 200;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int playerTurns = 0;
     public int level = 1;
     [HideInInspector] public bool playersTurn = true;
+    public bool enemyIsMoving;
 
     private Text levelText;
     private Text gameOverText;
@@ -30,6 +32,10 @@ public class GameManager : MonoBehaviour
     private bool doingSetup;
     private bool firstRun = true;
     private bool gameOver = false;
+    private float waitingTime;
+    private float timeToWait;
+    private int seconds;
+    private int milliseconds;
 
     public List<Vector2> mobMovePos = new List<Vector2>();
 
@@ -157,12 +163,7 @@ public class GameManager : MonoBehaviour
     IEnumerator MoveEnemies()
     {
         enemiesMoving = true;
-        yield return new WaitForSeconds(turnDelay);
-        if (enemies.Count == 0)
-        {
-            yield return new WaitForSeconds(turnDelay);
-        }
-
+        DateTime start = DateTime.Now;
         for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i].realMobHp <= 0)
@@ -172,10 +173,16 @@ public class GameManager : MonoBehaviour
             else
             {
                 enemies[i].MoveEnemy();
-                yield return new WaitForSeconds(enemies[i].moveTime);
+                yield return new WaitForSeconds(0.01f);
             }
         }
-
+        DateTime end = DateTime.Now;
+        TimeSpan timeDiff = end - start;
+        seconds = timeDiff.Seconds;
+        milliseconds = timeDiff.Milliseconds;
+        waitingTime = (float)seconds + ((float)milliseconds / 1000);
+        timeToWait = turnDelay - waitingTime;
+        yield return new WaitForSeconds(timeToWait);
         enemiesMoving = false;
         playersTurn = true;
     }

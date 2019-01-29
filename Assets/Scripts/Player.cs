@@ -78,10 +78,11 @@ public class Player : MovingObject
     // Update is called once per frame
     void Update()
     {
-        GameManager.instance.mobMovePos.Clear();
-
         if (!GameManager.instance.playersTurn) return;
 
+        Debug.Log("avant clean de la liste");
+        GameManager.instance.mobMovePos.Clear();
+        Debug.Log("Après clean de la liste");
 
         int horizontal = 0;
         int vertical = 0;
