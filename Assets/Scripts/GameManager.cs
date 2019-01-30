@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator MoveEnemies()
     {
+        Debug.Log("Début du tour des ennemis");
         bossTurn++;
         enemiesMoving = true;
         DateTime start = DateTime.Now;
@@ -190,6 +191,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 enemies[i].MoveEnemy();
+                Debug.Log("Déplacement de l'ennemi n°" + i);
                 yield return new WaitForSeconds(0.01f);
             }
         }
@@ -201,6 +203,7 @@ public class GameManager : MonoBehaviour
         timeToWait = turnDelay - waitingTime;
         yield return new WaitForSeconds(timeToWait);
         enemiesMoving = false;
+        Debug.Log("Fin du tour des ennemis");
         playersTurn = true;
     }
 }
