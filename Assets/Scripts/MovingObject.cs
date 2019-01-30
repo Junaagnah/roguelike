@@ -57,12 +57,14 @@ public abstract class MovingObject : MonoBehaviour
 
     protected IEnumerator SmoothMovement(Vector3 end)
     {
+        inverseMovetime = 8.5f;
         Debug.Log("InverseMoveTime " + inverseMovetime);
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
         while (sqrRemainingDistance > float.Epsilon)
         {
-            Debug.Log("InverseMoveTime * Time.deltaTime" + (inverseMovetime * Time.deltaTime));
-            Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMovetime * Time.deltaTime);
+            Debug.Log("fixedDeltaTime " + Time.fixedDeltaTime);
+            Debug.Log("InverseMoveTime * Time.fixedDeltaTime" + (inverseMovetime * Time.fixedDeltaTime));
+            Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMovetime * Time.fixedDeltaTime);
             rb2D.MovePosition(newPosition);
             sqrRemainingDistance = (transform.position - end).sqrMagnitude;
             yield return null;
