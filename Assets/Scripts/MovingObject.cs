@@ -19,7 +19,7 @@ public abstract class MovingObject : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
 
-        inverseMovetime = 1f / moveTime;
+        inverseMovetime = 8.5f;
     }
 
     protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
@@ -57,13 +57,9 @@ public abstract class MovingObject : MonoBehaviour
 
     protected IEnumerator SmoothMovement(Vector3 end)
     {
-        inverseMovetime = 8.5f;
-        Debug.Log("InverseMoveTime " + inverseMovetime);
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
         while (sqrRemainingDistance > float.Epsilon)
         {
-            Debug.Log("fixedDeltaTime " + Time.fixedDeltaTime);
-            Debug.Log("InverseMoveTime * Time.fixedDeltaTime" + (inverseMovetime * Time.fixedDeltaTime));
             Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMovetime * Time.fixedDeltaTime);
             rb2D.MovePosition(newPosition);
             sqrRemainingDistance = (transform.position - end).sqrMagnitude;
