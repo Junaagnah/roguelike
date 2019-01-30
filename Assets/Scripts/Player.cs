@@ -80,9 +80,7 @@ public class Player : MovingObject
     {
         if (!GameManager.instance.playersTurn) return;
 
-        Debug.Log("avant clean de la liste");
         GameManager.instance.mobMovePos.Clear();
-        Debug.Log("Après clean de la liste");
 
         int horizontal = 0;
         int vertical = 0;
@@ -100,6 +98,7 @@ public class Player : MovingObject
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
         turns++;
+        Debug.Log("Debut déplacement du joueur, tour: " + turns);
 
         foodText.text = "Food: " + food;
         playerStrengthText.text = "Strength: " + playerStrength;
