@@ -96,9 +96,10 @@ public class Enemy : MovingObject
 
         if (realMobHp <= 0)
         {
-            if (gameObject.tag == "boss")
+            if (gameObject.tag == "Boss")
             {
                 GameManager.instance.boardScript.InstantiateExit();
+                GameManager.instance.bossIsAlive = false;
             }
             gameObject.SetActive(false);
             Destroy(gameObject);

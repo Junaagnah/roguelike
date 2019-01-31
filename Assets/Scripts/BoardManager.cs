@@ -35,7 +35,11 @@ public class BoardManager : MonoBehaviour
 
     private Transform boardHolder;
     private List<Vector3> gridPositions = new List<Vector3>();
-    
+    private List<Vector3> gridPositionsBoss = new List<Vector3>();
+    public List<Vector3> occupedPositionList = new List<Vector3>();
+    private List<Vector3> positionToInstantiate = new List<Vector3>();
+
+
 
     void InitializeList()
     {
@@ -48,6 +52,10 @@ public class BoardManager : MonoBehaviour
                 if (x % 10 != 0 && y % 10 != 0)
                 {
                     gridPositions.Add(new Vector3(x, y, 0f));
+                    if (GameManager.instance.level % 10 == 0)
+                    {
+                        gridPositionsBoss.Add(new Vector3(x, y, 0f));
+                    }
                 }
             }
         }
@@ -136,12 +144,20 @@ public class BoardManager : MonoBehaviour
 
     public void BossInvokeMob()
     {
-        LayoutObjectAtRandom(enemyTiles, 1, 1);
+        positionToInstantiate = new List<Vector3>(gridPositionsBoss);
+
+        foreach (Enemy mob in GameManager.instance.enemies)
+        {
+            positionToInstantiate.Remove(mob.transform.position);
+        }
+        positionToInstantiate.Remove(GameManager.instance.playerPosition);
+
+        Instantiate(mob, positionToInstantiate[Random.Range(0, positionToInstantiate.Count)], Quaternion.identity);
     }
 
-    public void FoodInvoke()
+public void FoodInvoke()
     {
-        LayoutObjectAtRandom(foodTiles, 1, 1);
+        Instantiate(foodTiles[0], gridPositionsBoss[Random.Range(0, gridPositionsBoss.Count)], Quaternion.identity);
     }
 
     public void InstantiateExit()

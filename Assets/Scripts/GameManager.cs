@@ -17,18 +17,20 @@ public class GameManager : MonoBehaviour
     public int playerMoney;
     public int playerMonsterKilled;
     public int playerBossKilled = 0;
-    public int playerStrength = 3;
+    public int playerStrength = 300;
     public int playerTurns = 0;
     public int level = 1;
     [HideInInspector] public bool playersTurn = true;
     public bool enemyIsMoving;
     [HideInInspector] public int bossTurn = 0;
+    public Vector2 playerPosition;
+    public bool bossIsAlive;
 
     private Text levelText;
     private Text gameOverText;
     private Text levelTextUI;
     private GameObject levelImage;
-    private List<Enemy> enemies;
+    [HideInInspector] public List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
     private bool firstRun = true;
@@ -82,6 +84,7 @@ public class GameManager : MonoBehaviour
         levelImage.SetActive(true);
         Invoke("HideLevelImage", levelStartDelay);
         bossTurn = 0;
+        bossIsAlive = true;
 
         enemies.Clear();
         boardScript.SetupScene(level);
@@ -157,14 +160,15 @@ public class GameManager : MonoBehaviour
         bossTurn++;
         enemiesMoving = true;
         DateTime start = DateTime.Now;
+        yield return new WaitForSeconds(0.1f);
 
         if (level % 10 == 0)
         {
-            if (bossTurn != 0 && bossTurn % 20 == 0)
+            if (bossTurn != 0 && bossTurn % 20 == 0 && bossIsAlive)
             {
                 this.boardScript.BossInvokeMob();
             }
-            else if (bossTurn != 0 && bossTurn % 15 == 0)
+            else if (bossTurn != 0 && bossTurn % 15 == 0 && bossIsAlive)
             {
                 this.boardScript.FoodInvoke();
             }
@@ -189,6 +193,7 @@ public class GameManager : MonoBehaviour
         waitingTime = (float)seconds + ((float)milliseconds / 1000);
         timeToWait = turnDelay - waitingTime;
         yield return new WaitForSeconds(timeToWait);
+        Debug.Log(timeToWait);
         enemiesMoving = false;
         playersTurn = true;
     }

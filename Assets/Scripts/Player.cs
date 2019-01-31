@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Player : MovingObject
 {
     public int wallDamage = 1;
-    public int playerStrength;
+    private int playerStrength;
     public int pointsPerFoodMin = 10;
     public int pointsPerFoodMax = 20;
     public int strengthPotionValue;
@@ -116,6 +116,8 @@ public class Player : MovingObject
         //}
 
         CheckIfGameOver();
+
+        GameManager.instance.playerPosition = this.transform.position;
 
         GameManager.instance.playersTurn = false;
     }

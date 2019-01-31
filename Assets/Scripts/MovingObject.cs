@@ -36,7 +36,7 @@ public abstract class MovingObject : MonoBehaviour
             }
         }
 
-        GameManager.instance.mobMovePos.Add(end);
+        GameManager.instance.mobMovePos.Add(end); 
 
         boxCollider.enabled = false;
         hit = Physics2D.Linecast(start, end, blockingLayer);
