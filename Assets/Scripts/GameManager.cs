@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelTextUI = GameObject.Find("Etage").GetComponent<Text>();
         gameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
-        levelText.text = "Etage " + level;
+        levelText.text = "Étage " + level;
         levelTextUI.text = levelText.text;
         levelImage.SetActive(true);
         Invoke("HideLevelImage", levelStartDelay);
@@ -96,8 +96,8 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOver = true;
-        levelText.text = "After " + level + " levels, you died.";
-        gameOverText.text = "Press R to restart. Press Escape to quit.";
+        levelText.text = "Après " + level + " étages, vous êtes mort.";
+        gameOverText.text = "Appuyez sur R pour recommencer. Appuyez sur Échap pour revenir au menu.";
         levelImage.SetActive(true);
         GameObject.FindGameObjectWithTag("Player").SetActive(false);
 
@@ -114,33 +114,22 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (gameOver)
-            {
-                gameOver = false;
-            } else
-            {
-                GameObject.FindGameObjectWithTag("Player").SetActive(false);
-            }
-            score = new Score(Score.idUserTemp);
-            gameOverText.text = "";
-            level = 0;
-            playerFoodPoints = 200;
-            playerStrength = 3;
-            playerLvl = 1;
-            playerMoney = 0;
-            playerXp = 0;
-            playerTurns = 0;
-            playerMonsterKilled = 0;
-            playerBossKilled = 0;
-            bossTurn = 0;
-            SoundManager.instance.gameOverMusic.Stop();
-            SoundManager.instance.musicSource.Play();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            foreach (GameObject Object in GameObject.FindObjectsOfType<GameObject>())
+            {
+                Destroy(Object);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+
+            foreach (GameObject Object in GameObject.FindObjectsOfType<GameObject>())
+            {
+                Destroy(Object);
+            }
         }
 
         if (playersTurn || enemiesMoving || doingSetup)

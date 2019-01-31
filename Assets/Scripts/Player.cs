@@ -53,11 +53,11 @@ public class Player : MovingObject
         bossKilled = GameManager.instance.playerBossKilled;
         turns = GameManager.instance.playerTurns;
 
-        foodText.text = "Food: " + food;
-        playerLvlText.text = "LVL " + lvl;
-        playerMoneyText.text = "Coins: " + money;
-        playerXpText.text = "XP: " + xp + "/100";
-        playerStrengthText.text = "Strength: " + playerStrength;
+        foodText.text = "PV: " + food;
+        playerLvlText.text = "NIVEAU " + lvl;
+        playerMoneyText.text = "OR: " + money;
+        playerXpText.text = "EXP: " + xp + "/100";
+        playerStrengthText.text = "FORCE: " + playerStrength;
 
 
         base.Start();
@@ -100,8 +100,8 @@ public class Player : MovingObject
         turns++;
         Debug.Log("Debut déplacement du joueur, tour: " + turns);
 
-        foodText.text = "Food: " + food;
-        playerStrengthText.text = "Strength: " + playerStrength;
+        foodText.text = "PV: " + food;
+        playerStrengthText.text = "FORCE: " + playerStrength;
 
         base.AttemptMove<T>(xDir, yDir);
 
@@ -131,7 +131,7 @@ public class Player : MovingObject
         {
             int foodGain = Random.Range(pointsPerFoodMin, pointsPerFoodMax);
             food += foodGain;
-            foodText.text = "+" + foodGain + " Food: " + food;
+            foodText.text = "+" + foodGain + " PV: " + food;
             SoundManager.instance.RandomizeSfx(eatSound1, eatSound2);
             other.gameObject.SetActive(false);
         }
@@ -153,7 +153,7 @@ public class Player : MovingObject
             }
 
             string strengthText = strengthPotionValue.ToString("+#;-#;0");
-            playerStrengthText.text = strengthText + " Strength: " + playerStrength;
+            playerStrengthText.text = strengthText + " FORCE: " + playerStrength;
             SoundManager.instance.RandomizeSfx(drinkSound1, drinkSound1);
             other.gameObject.SetActive(false);
         }
@@ -178,8 +178,8 @@ public class Player : MovingObject
         }
         animator.SetTrigger("playerChop");
         GetComponent<AudioSource>().PlayOneShot(swooshSound);
-        foodText.text = "Food: " + food;
-        playerMoneyText.text = "Coins: " + money;
+        foodText.text = "PV: " + food;
+        playerMoneyText.text = "OR: " + money;
     }
 
     protected override void AttackPlayer(Player player) { }
@@ -194,7 +194,7 @@ public class Player : MovingObject
         animator.SetTrigger("playerHit");
         food -= loss;
         GetComponent<AudioSource>().PlayOneShot(getHit);
-        foodText.text = "-" + loss + " Food: " + food;
+        foodText.text = "-" + loss + " PV: " + food;
         CheckIfGameOver();
     }
 
@@ -208,11 +208,11 @@ public class Player : MovingObject
             playerStrength++;
             food += 25;
             xp -= 100;
-            playerLvlText.text = "LVL " + lvl;
-            playerXpText.text = "XP: " + xp + "/100";
-            playerStrengthText.text = "Strength: " + playerStrength;
+            playerLvlText.text = "NIVEAU " + lvl;
+            playerXpText.text = "EXP: " + xp + "/100";
+            playerStrengthText.text = "FORCE: " + playerStrength;
         }
-        playerXpText.text = "XP: " + xp + "/100";
+        playerXpText.text = "EXP: " + xp + "/100";
     }
 
     private void MoneyGain (int moneyGained)
