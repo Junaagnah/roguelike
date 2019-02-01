@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : MovingObject
 {
     public int mobStrength;
-    public int hpMob = 10;
+    public int hpMob;
     [HideInInspector] public int realMobHp;
     public int wallDamage = 2;
     public int xpGiven;
@@ -32,6 +32,10 @@ public class Enemy : MovingObject
         realMobStrength = mobStrength + (int)Mathf.Log(GameManager.instance.level, 2f);
         // On ajuste les points de vie des ennemis en fonction de la difficulté
         realMobHp = hpMob + ((int)Mathf.Log(GameManager.instance.level, 2f) * 2);
+        if (this.gameObject.tag == "Boss")
+        {
+            realMobHp += GameManager.instance.level;
+        }
         base.Start();
     }
     // Fonction issue de la classe MovingObject override par la classe Enemy, elle est appelée a chaque déplacement d'une instance d'ennemi
