@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool playersTurn = true;
     public bool enemyIsMoving;
     [HideInInspector] public int bossTurn = 0;
-    public Vector2 playerPosition;
     public bool bossIsAlive;
 
     private Text levelText;

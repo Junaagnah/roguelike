@@ -120,9 +120,6 @@ public class Player : MovingObject
             SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
         }
 
-        // On stocke la position du joueur dans une variable du Gamemanager
-        GameManager.instance.playerPosition = this.transform.position;
-
         // Le tour du joueur est finit
         GameManager.instance.playersTurn = false;
     }

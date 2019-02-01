@@ -153,7 +153,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    //Place le boss sur la carte
+    //Invocation de monstre durant la salle du boss
     public void BossInvokeMob()
     {
         positionToInstantiate = new List<Vector3>(gridPositionsBoss);
@@ -162,7 +162,8 @@ public class BoardManager : MonoBehaviour
         {
             positionToInstantiate.Remove(mob.transform.position);
         }
-        positionToInstantiate.Remove(GameManager.instance.playerPosition);
+
+        positionToInstantiate.Remove(GameObject.FindWithTag("Player").transform.position);
 
         Instantiate(mob, positionToInstantiate[Random.Range(0, positionToInstantiate.Count)], Quaternion.identity);
     }
