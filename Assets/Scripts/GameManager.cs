@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     private bool enemiesMoving;
     private bool doingSetup;
     private bool firstRun = true;
-    private bool gameOver = false;
     private float waitingTime;
     private float timeToWait;
     private int seconds;
@@ -111,7 +110,6 @@ public class GameManager : MonoBehaviour
     //Affiche l'écran de Game Over
     public void GameOver()
     {
-        gameOver = true;
         levelText.text = "Après " + level + " étages, vous êtes mort.";
         gameOverText.text = "Appuyez sur R pour recommencer. Appuyez sur Échap pour revenir au menu.";
         levelImage.SetActive(true);
