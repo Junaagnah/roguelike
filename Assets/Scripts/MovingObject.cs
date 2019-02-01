@@ -90,10 +90,11 @@ public abstract class MovingObject : MonoBehaviour
         RaycastHit2D hit;
         // Si le retour de Move est false c'est que l'entitée est entrée en collision avec une autre entitée
         bool canMove = Move(xDir, yDir, out hit);
-
-        // Si il n'y a pas de collision on set la variable playerCanMove a true pour l'utiliser dans la classe Player et jouer le bruit de déplacement
-        if (canMove)
+        
+        // Lorsque hit est nul
+        if (hit.transform == null)
         {
+            // Il n'y a pas de collision donc on set la variable playerCanMove a true pour l'utiliser dans la classe Player et jouer le bruit de déplacement
             playerCanMove = true;
             // Vu qu'il n'y a pas de collision on peux sortir de la fonction
             return;
