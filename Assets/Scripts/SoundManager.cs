@@ -29,12 +29,14 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    //Joue un son passé un paramètre
     public void PlaySingle(AudioClip clip)
     {
         efxSource.clip = clip;
         efxSource.Play();
     }
 
+    //Joue sur la hauteur du son pour créer de la diversité
     public void RandomizeSfx(params AudioClip[] clips)
     {
         int randomIndex = Random.Range(0, clips.Length);

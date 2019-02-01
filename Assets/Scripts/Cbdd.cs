@@ -20,6 +20,7 @@ public class Cbdd
         this.connection = new MySqlConnection(connectionString);
     }
 
+    //Récupère une liste contenant les difficultés dans la base de données
     public List<Difficulty> GetDifficulties()
     {
         List<Difficulty> diffs = new List<Difficulty>();
@@ -65,6 +66,7 @@ public class Cbdd
         return diffs;
     }
 
+    //Enregistre le score du joueur dans la bdd
     public void SaveGame(Score score, Difficulty diff)
     {
         try
@@ -94,6 +96,7 @@ public class Cbdd
         }
     }
 
+    //Récupère la liste des scores en fonction de la difficultée entrée en paramètre
     public List<Score> GetScores(int diff)
     {
         List<Score> scores = new List<Score>();

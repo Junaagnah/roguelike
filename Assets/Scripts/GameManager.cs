@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
         InitGame();
     }
 
+    //Incrémente le niveau et crée une nouvelle carte
     private void OnLevelWasLoaded(int index)
     {
         if (firstRun)
@@ -69,6 +70,8 @@ public class GameManager : MonoBehaviour
 
         level++;
         InitGame();
+
+        //Si le niveau est un multiple de 10, on lance la musique du boss
         if (level % 10 == 0)
         {
             SoundManager.instance.musicSource.Stop();
@@ -77,6 +80,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Initialise le jeu avec les valeurs par défaut et crée la map
     void InitGame()
     {
         doingSetup = true;
@@ -96,12 +100,14 @@ public class GameManager : MonoBehaviour
         boardScript.SetupScene(level);
     }
 
+    //Cache l'image affichant le niveau
     private void HideLevelImage()
     {
         levelImage.SetActive(false);
         doingSetup = false;
     }
 
+    //Affiche l'écran de Game Over
     public void GameOver()
     {
         gameOver = true;
@@ -121,6 +127,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Détruit tous les éléments et réinitialise la scène quand le joueur appuie sur R pour recommencer
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -131,6 +138,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //Détruit tous les éléments et retourne au menu quand le joueur appuie sur Echap
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
@@ -141,10 +149,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //Empêche les ennemis de bouger
         if (playersTurn || enemiesMoving || doingSetup)
         {
             if (playersTurn)
             {
+                //Permet au joueur de passer son tour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     playersTurn = false;
@@ -153,9 +163,11 @@ public class GameManager : MonoBehaviour
             return;
         }    
 
+        //Si ce n'est pas le tour du joueur, on appelle la coroutine gérant les mouvements des ennemis
         StartCoroutine(MoveEnemies());
     }
 
+    //Ajout un ennemi à la liste des ennemis
     public void AddEnemyToList(Enemy script)
     {
         enemies.Add(script);

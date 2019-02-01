@@ -9,8 +9,7 @@ public class Loader : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
-
+        //Instantie le Game Manager
         if (GameManager.instance == null)
         {
             Instantiate(gameManager);

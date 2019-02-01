@@ -27,17 +27,20 @@ public class Score
 
     static public int idUserTemp;
 
+    //Construit un score ne contenant que l'id du joueur pour le démarrage
     public Score(int Id)
     {
         idUser = Id;
     }
 
+    //Construit un score utilisé dans le leaderboard
     public Score(string PseudoUser, int Score)
     {
         pseudoUser = PseudoUser;
         scoreUser = Score;
     }
 
+    //Replit le score avec les valeurs données
     public void SaveGame(int niveau, int force, int argent, int tours, int monstres, int boss)
     {
         NiveauPerso = niveau;

@@ -17,6 +17,7 @@ public class DropdownValue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Met à jour la difficulté sélectionnée
         dropdownIndex = dropdown.value;
         Difficulty.selected = Difficulty.difficulties[dropdownIndex];
     }

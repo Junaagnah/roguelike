@@ -19,6 +19,7 @@ public class LeaderBoard : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //Récupère les scores depuis la bdd
         scoresEasy = bdd.GetScores(1);
         scoresMedium = bdd.GetScores(2);
         scoresHard = bdd.GetScores(3);
@@ -26,6 +27,7 @@ public class LeaderBoard : MonoBehaviour
 
     private void Start()
     {
+        //Remplis le tableau des scores en facile
         for (int i = 0; i < scoresEasy.Count; i++)
         {
             username = GameObject.Find("EasyPseudo" + (i + 1)).GetComponent<TextMeshProUGUI>();
@@ -36,6 +38,7 @@ public class LeaderBoard : MonoBehaviour
         }
     }
 
+    //Remplis le tableau des scores en moyen
     public void FillMedium()
     {
         if (!MediumFilled)
@@ -53,6 +56,7 @@ public class LeaderBoard : MonoBehaviour
         }
     }
 
+    //Remplis le tableau des scores en difficile
     public void FillHard()
     {
         if (!HardFilled)

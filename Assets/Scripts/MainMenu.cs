@@ -16,7 +16,6 @@ public class MainMenu : MonoBehaviour
         {
             if (File.ReadAllText(userFile) == "offline")
             {
-                //@TODO: créer une difficulté par défaut & empêcher le joueur de sauvegarder son score
                 //Si le joueur est hors-ligne, on assigne automatiquement la difficulté facile et on la nomme Offline pour plus tard
                 Difficulty.selected = new Difficulty(0, "Offline", 11, (decimal)0.9, (decimal)0.3, 0, 8, 12, 3, 4, 1);
 
@@ -26,6 +25,7 @@ public class MainMenu : MonoBehaviour
             }
             else
             {
+                //Sinon, on récupère l'id de l'user dans le fichier et les difficultés depuis la bdd
                 Score.idUserTemp = int.Parse(File.ReadAllText(userFile));
 
                 Difficulty.difficulties = bdd.GetDifficulties();

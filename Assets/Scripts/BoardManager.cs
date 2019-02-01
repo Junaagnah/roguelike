@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour
 {
+    //Classe count affichable dans l'éditeur
     [Serializable]
     public class Count
     {
@@ -40,7 +41,7 @@ public class BoardManager : MonoBehaviour
     private List<Vector3> positionToInstantiate = new List<Vector3>();
 
 
-
+    //Initialise la liste des positions où seront placés murs, items et monstres
     void InitializeList()
     {
         gridPositions.Clear();
@@ -49,6 +50,7 @@ public class BoardManager : MonoBehaviour
         {
             for (int y = 2; y < rows - 2; y++)
             {
+                //Gère la création des cartes multi-salles
                 if (x % 10 != 0 && y % 10 != 0)
                 {
                     gridPositions.Add(new Vector3(x, y, 0f));
@@ -61,6 +63,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    //Crée la carte de jeu en y plaçant les sprites de sol, les murs et les murs extérieurs
     void BoardSetup()
     {
         boardHolder = new GameObject("Board").transform;
@@ -71,6 +74,7 @@ public class BoardManager : MonoBehaviour
             {
                 GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
 
+                //Place des murs extérieurs pour délimiter les salles
                 if (x != 0 && y != 0 && x != columns -1 && y != rows -1)
                 {
                     if ((x % 10 == 0 || y % 10 == 0) && ((x % 5 != 0) || (y % 5 != 0)) || (x % 10 == 0 && y % 10 == 0))
@@ -83,8 +87,7 @@ public class BoardManager : MonoBehaviour
                     toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
                 }
 
-                
-
+                //Instancie le GameObject instance
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
                 instance.transform.SetParent(boardHolder);
@@ -92,6 +95,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    //Renvoie une position aléatoire de type Vector3
     Vector3 RandomPosition()
     {
         int randomIndex = Random.Range(0, gridPositions.Count);
@@ -101,6 +105,7 @@ public class BoardManager : MonoBehaviour
         return randomPosition;
     }
 
+    //Place les items sur la map
     void LayoutObjectAtRandom(GameObject[] tileArray, int minimum, int maximum)
     {
         int objectCount = Random.Range(minimum, maximum + 1);
@@ -113,8 +118,10 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    //Crée la scène
     public void SetupScene(int level)
     {
+        //Salle de boss
         if (level % 10 == 0)
         {
             columns = 11;
@@ -125,6 +132,7 @@ public class BoardManager : MonoBehaviour
             Instantiate(boss, new Vector3(5, 5, 0f), Quaternion.identity);
 
         }
+        //Salle normale
         else
         {
             columns = Difficulty.selected.RoomLength;
@@ -142,6 +150,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    //Place le boss sur la carte
     public void BossInvokeMob()
     {
         positionToInstantiate = new List<Vector3>(gridPositionsBoss);
@@ -155,11 +164,13 @@ public class BoardManager : MonoBehaviour
         Instantiate(mob, positionToInstantiate[Random.Range(0, positionToInstantiate.Count)], Quaternion.identity);
     }
 
-public void FoodInvoke()
+    //Instancie les sprites de nourriture
+    public void FoodInvoke()
     {
         Instantiate(foodTiles[0], gridPositionsBoss[Random.Range(0, gridPositionsBoss.Count)], Quaternion.identity);
     }
 
+    //Instancie le sprite de la sortie
     public void InstantiateExit()
     {
         Instantiate(exit, new Vector3(columns - 2, rows - 2, 0f), Quaternion.identity);
