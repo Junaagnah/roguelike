@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource efxSource;
     public AudioSource musicSource;
     public AudioSource gameOverMusic;
+    public AudioSource bossMusic;
     public static SoundManager instance = null;
 
     public float lowPitchRange = .95f;

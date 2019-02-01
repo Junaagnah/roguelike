@@ -69,6 +69,12 @@ public class GameManager : MonoBehaviour
 
         level++;
         InitGame();
+        if (level % 10 == 0)
+        {
+            SoundManager.instance.musicSource.Stop();
+            SoundManager.instance.bossMusic.Play();
+            return;
+        }
     }
 
     void InitGame()

@@ -100,6 +100,8 @@ public class Enemy : MovingObject
             {
                 GameManager.instance.boardScript.InstantiateExit();
                 GameManager.instance.bossIsAlive = false;
+                SoundManager.instance.bossMusic.Stop();
+                SoundManager.instance.musicSource.Play();
             }
             gameObject.SetActive(false);
             Destroy(gameObject);
