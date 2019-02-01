@@ -239,6 +239,7 @@ public class Player : MovingObject
         if (food <= 0)
         {
             SoundManager.instance.musicSource.Stop();
+            SoundManager.instance.bossMusic.Stop();
             StartCoroutine(DCD());
         }
     }
