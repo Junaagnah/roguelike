@@ -24,6 +24,7 @@ public class BoardManager : MonoBehaviour
 
     private int columns;
     private int rows;
+    private int foodInvoked;
     private Count wallCount = new Count(Difficulty.selected.MinSpawnWall, Difficulty.selected.MaxSpawnWall);
     private Count foodCount = new Count(Difficulty.selected.MinSpawnFood, Difficulty.selected.MaxSpawnFood);
     public GameObject exit;
@@ -169,7 +170,11 @@ public class BoardManager : MonoBehaviour
     //Instancie les sprites de nourriture
     public void FoodInvoke()
     {
-        Instantiate(foodTiles[0], gridPositionsBoss[Random.Range(0, gridPositionsBoss.Count)], Quaternion.identity);
+        if (foodInvoked < 10)
+        {
+            Instantiate(foodTiles[0], gridPositionsBoss[Random.Range(0, gridPositionsBoss.Count)], Quaternion.identity);
+            foodInvoked++;
+        }
     }
 
     //Instancie le sprite de la sortie

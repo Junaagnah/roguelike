@@ -166,31 +166,37 @@ public class GameManager : MonoBehaviour
         StartCoroutine(MoveEnemies());
     }
 
-    //Ajout un ennemi à la liste des ennemis
+    //Ajout d'un ennemi à la liste des ennemis
     public void AddEnemyToList(Enemy script)
     {
         enemies.Add(script);
     }
 
+    // Fonction appelée au début du tour des ennemis
     IEnumerator MoveEnemies()
     {
+        // On incrémente le nombre de tours
         bossTurn++;
         enemiesMoving = true;
+        // Cette variable recupère la Date au moment actuel
         DateTime start = DateTime.Now;
         yield return new WaitForSeconds(0.1f);
 
+        // Tout les 10 niveaux nous sommes dans un Etage de boss
         if (level % 10 == 0)
         {
+            // Le boss invoque des ennemis tout les 20 tours
             if (bossTurn != 0 && bossTurn % 20 == 0 && bossIsAlive)
             {
                 this.boardScript.BossInvokeMob();
             }
+            // De la nourriture apparait tout les 15 tours
             else if (bossTurn != 0 && bossTurn % 15 == 0 && bossIsAlive)
             {
                 this.boardScript.FoodInvoke();
             }
         }
-
+        // Cette boucle permet a chaque ennemis instancié de se déplacer
         for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i].realMobHp <= 0)
@@ -203,13 +209,19 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
             }
         }
+        // A la fin de la boucle on récupère a nouveau la Date
         DateTime end = DateTime.Now;
+        // On fait une comparaison pour calculer le temps qu'il s'est écoulé durant le tour des ennemis pour pouvoir attendre avant le début du tour du joueur
+        // Cela permet de réguler la vitesse entre les tours lorsqu'il y a peu d'ennemis et donc peu d'actions
+
         TimeSpan timeDiff = end - start;
         seconds = timeDiff.Seconds;
         milliseconds = timeDiff.Milliseconds;
         waitingTime = (float)seconds + ((float)milliseconds / 1000);
         timeToWait = turnDelay - waitingTime;
         yield return new WaitForSeconds(timeToWait);
+
+        // Fin du tour des ennemis et début du tour du joueur
         enemiesMoving = false;
         playersTurn = true;
     }
