@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Cette classe permet de gérer les musiques qui sont jouées dans l'application
 public class SoundManager : MonoBehaviour
 {
     public AudioSource efxSource;

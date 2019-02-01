@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Cette classe permet de stocker les différentes difficultés
 public class Difficulty
 {
     readonly int id;

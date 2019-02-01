@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
+// Cette classe permet de gérer l'entièretée de l'application
 public class GameManager : MonoBehaviour
 {
     public float levelStartDelay = 2f;

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// Cette classe permet de gérer le tableau des scores
 public class LeaderBoard : MonoBehaviour
 {
     private List<Score> scoresEasy;

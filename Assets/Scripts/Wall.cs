@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Cette classe permet de gérer les murs qui sont destructibles
 public class Wall : MonoBehaviour
 {
     public Sprite dmgSprite;

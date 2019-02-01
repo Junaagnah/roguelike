@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+ // Cette classe permet de récupérer le score d'un joueur
 public class Score
 {
     readonly int idUser;

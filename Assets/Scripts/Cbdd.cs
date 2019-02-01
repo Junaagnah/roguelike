@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MySql.Data.MySqlClient;
 
+// Cette classe contient toutes les méthodes concernant les interractions avec la base de données
 public class Cbdd
 {
     private MySqlConnection connection;

@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
 
+
+// Cette classe permet de gérer les instanciation des différents prefabs qui composent un niveau
 public class BoardManager : MonoBehaviour
 {
     //Classe count affichable dans l'éditeur
