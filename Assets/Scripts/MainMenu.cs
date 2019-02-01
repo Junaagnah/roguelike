@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//Classe gérant les actions du menu principal
 public class MainMenu : MonoBehaviour
 {
     private Cbdd bdd = new Cbdd();

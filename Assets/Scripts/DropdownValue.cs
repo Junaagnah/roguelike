@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Script permettant de gérer la sélection de difficulté
 public class DropdownValue : MonoBehaviour
 {
     private Dropdown dropdown;
