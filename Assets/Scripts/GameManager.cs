@@ -212,7 +212,6 @@ public class GameManager : MonoBehaviour
         waitingTime = (float)seconds + ((float)milliseconds / 1000);
         timeToWait = turnDelay - waitingTime;
         yield return new WaitForSeconds(timeToWait);
-        Debug.Log(timeToWait);
         enemiesMoving = false;
         playersTurn = true;
     }
