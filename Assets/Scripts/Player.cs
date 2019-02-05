@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-// Cette classe permet de gérer l'instance du Joueur
+//Cette classe permet de gérer l'instance du Joueur
 public class Player : MovingObject
 {
     public int wallDamage = 1;
@@ -40,6 +40,7 @@ public class Player : MovingObject
     private int money;
     private int turns;
     private int bossKilled;
+    private int xpToLevelUp;
 
     // Start is called before the first frame update
     // Rècupère le controlleur d'naimations de l'instance du joueur et set les variables du joueur via les données stockées dans le Gamemanager
@@ -56,13 +57,13 @@ public class Player : MovingObject
         playerStrength = GameManager.instance.playerStrength;
         bossKilled = GameManager.instance.playerBossKilled;
         turns = GameManager.instance.playerTurns;
+        xpToLevelUp = 100 + ((lvl - 1) * 25);
 
         foodText.text = "PV: " + food;
         playerLvlText.text = "NIVEAU " + lvl;
         playerMoneyText.text = "OR: " + money;
-        playerXpText.text = "EXP: " + xp + "/100";
+        playerXpText.text = "EXP: " + xp + "/" + xpToLevelUp;
         playerStrengthText.text = "FORCE: " + playerStrength;
-
 
         base.Start();
     }
@@ -222,17 +223,18 @@ public class Player : MovingObject
     {
         xp += xpGained;
         // Lorsque le joueur dépasse les 100 d'xp il gagne un niveau et donc de la vie, de la force
-        if (xp >= 100)
+        if (xp >= xpToLevelUp)
         {
             lvl++;
+            xp -= xpToLevelUp;
+            xpToLevelUp = 100 + ((lvl - 1) * 25);
             playerStrength++;
             food += 25;
-            xp -= 100;
             playerLvlText.text = "NIVEAU " + lvl;
-            playerXpText.text = "EXP: " + xp + "/100";
+            playerXpText.text = "EXP: " + xp + "/" + xpToLevelUp;
             playerStrengthText.text = "FORCE: " + playerStrength;
         }
-        playerXpText.text = "EXP: " + xp + "/100";
+        playerXpText.text = "EXP: " + xp + "/" + xpToLevelUp;
     }
     // Fonction appelée quand le joueur gagne de l'Or
     private void MoneyGain (int moneyGained)
